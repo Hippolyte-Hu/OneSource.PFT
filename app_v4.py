@@ -50,6 +50,15 @@ BASELINE_CPK = {
     "House Mix":    {"sugar": 1.12, "vitC": 1.00},
 }
 
+# Cost per mL (edit to your real numbers)
+COST_PER_ML = {
+    "Orange": 0.020,
+    "Apple": 0.018,
+    "Grape": 0.030,
+    "Pineapple": 0.025,
+    "Water": 0.000,  # free/ignored if you prefer
+}
+
 # -------------------------
 # Core math helpers
 # -------------------------
@@ -257,7 +266,10 @@ with optimizer_tab:
                 row[f"Vol {i} (mL)"] = v
             for i in picked:
                 row.setdefault(f"Vol {i} (mL)", 0)
-
+            # >>> NEW: mixture cost per 100 mL
+            mix_cost = sum(v * COST_PER_ML.get(i, 0.0) for i, v in zip(combo, vols))
+            row["Cost (per 100 mL)"] = mix_cost
+            # <<< NEW
             rows.append(row)
 
         df = pd.DataFrame(rows)
@@ -287,7 +299,9 @@ with optimizer_tab:
             base_cols = ["tier", "note", "avg_cpk", "avg_baseline"]
         else:
             base_cols = ["tier", "note", "min_cpk", "min_baseline"]
-
+        # >>> NEW: identify the cost column
+        cost_cols = [c for c in df.columns if c == "Cost (per 100 mL)"]
+        # <<< NEW
         other_cols = [c for c in df.columns if c not in set(base_cols + vol_cols + diag_cols)]
         cols = [c for c in (base_cols + vol_cols + other_cols + diag_cols) if c in df.columns]
         df = df[cols].copy()
