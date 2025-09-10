@@ -2,3 +2,4 @@ streamlit>=1.31
 pandas
 numpy
 matplotlib
+openpyxl
