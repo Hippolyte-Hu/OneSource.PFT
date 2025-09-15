@@ -4,7 +4,8 @@ import numpy as np
 import itertools as it
 import math
 import matplotlib.pyplot as plt
-
+import os
+from scipy.optimize import minimize
 st.set_page_config(page_title="Cpk Optimizer", page_icon="🧪", layout="wide")
 
 # -------------------------
@@ -217,7 +218,7 @@ optimizer_tab, explainer_tab, practice_tab = st.tabs(
 # -------------------------
 # Helper: load ingredient distributions from Excel
 # -------------------------
-import os
+
 
 DATA_XLSX = "data/ingredient_nutrient_distributions_checked.xlsx"
 
@@ -493,7 +494,7 @@ with optimizer_tab:
         return -score_from_vols(x)
 
     # ------------------------- Solve with SLSQP ------------------------------
-    from scipy.optimize import minimize
+
 
     m = len(all_ingredients)
     bounds = [(0.0, ML_TOTAL)] * m
@@ -607,7 +608,6 @@ with optimizer_tab:
     )
 
 # --- CPk Explainer (drop-in for your explainer tab) ---
-import matplotlib.pyplot as plt
 
 with explainer_tab:
     st.title("📈 Cpk Explainer(Normal distribution)")
@@ -727,7 +727,6 @@ with explainer_tab:
     )
 
 # --- Cpk in Practice (third tab): mix ingredient distributions and see FG robustness ---
-import matplotlib.pyplot as plt
 
 with practice_tab:
     st.title("🧪 Cpk in Practice — Recipe Robustness")
