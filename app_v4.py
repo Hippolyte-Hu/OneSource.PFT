@@ -218,7 +218,7 @@ optimizer_tab, explainer_tab, practice_tab = st.tabs(
 import os
 
 #DATA_XLSX = "data/ingredient_nutrient_distributions_checked.xlsx"
-DATA_XLSX = "data/ingredient_nutrient_distributions_for_optimizer.xlsx"
+DATA_XLSX = "data/ingredient_nutrient_distributions_for_optimizer_v2.xlsx"
 
 def load_ingr_map_from_excel(path: str) -> dict:
     """
