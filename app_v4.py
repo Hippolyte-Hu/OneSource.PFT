@@ -563,18 +563,18 @@ with optimizer_tab:
     vol_df = pd.DataFrame(
         {
             "Ingredient": all_ingredients,
-            "Volume (mL)": np.round(x_opt, 6),
+            "Volume (g)": np.round(x_opt, 6),
         }
     )
     vol_df = (
-        vol_df[vol_df["Volume (mL)"] > 0.01]
-        .sort_values("Volume (mL)", ascending=False)
+        vol_df[vol_df["Volume (g)"] > 0.01]
+        .sort_values("Volume (g)", ascending=False)
         .reset_index(drop=True)
     )
 
     c1, c2 = st.columns([1, 1])
     with c1:
-        st.subheader("Optimal volumes (per 100 mL)")
+        st.subheader("Optimal volumes (per 100 g)")
         st.dataframe(vol_df, use_container_width=True)
     with c2:
         st.subheader("Mixture stats per nutrient")
@@ -854,7 +854,7 @@ with practice_tab:
     dfv = pd.DataFrame(
         {
             "Ingredient": chosen,
-            "Volume (mL)": vols_ml,
+            "Volume (g)": vols_ml,
             f"{nutrient} μ": [INGR[i].get(nutrient, (0.0, 0.0))[0] for i in chosen],
             f"{nutrient} σ": [INGR[i].get(nutrient, (0.0, 0.0))[1] for i in chosen],
         }
